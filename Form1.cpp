@@ -22,10 +22,16 @@ public:
         this->setCentralWidget(webBrowser1);
 
         connect(webBrowser1, &QWebEngineView::loadFinished, this, &Form1::onDocumentCompleted);
+        connect(this, &Form1::resize, this, &Form1::onFormResize);
         webBrowser1->load(QUrl("https://www.plazmaburst2.com/launcher/index.php"));
     }
 
 private slots:
+    void onFormResize()
+    {
+        if (webBrowser1 != nullptr)
+            webBrowser1->resize(size());
+    }
     void onDocumentCompleted(bool isLauncherIndexPhpLoadedProperly)
     {
         QWebEngineView* webBrowser1 = qobject_cast<QWebEngineView*>(sender());
